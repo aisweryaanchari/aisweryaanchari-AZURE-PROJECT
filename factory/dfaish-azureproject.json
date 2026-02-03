@@ -1,0 +1,9 @@
+{
+	"name": "dfaish-azureproject",
+	"location": "canadacentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "d41afa16-d646-4df0-b013-b3b12d300739",
+		"tenantId": "3038cf68-95a1-4d10-ad95-458ce35f17bb"
+	}
+}
