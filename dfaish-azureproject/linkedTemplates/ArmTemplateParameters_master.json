@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "dfaish-azureproject"
+		},
+		"LS_ADLSGEN2_accountKey": {
+			"value": ""
+		},
+		"ls_az_sql_password": {
+			"value": ""
+		},
+		"LS_ADLSGEN2_properties_typeProperties_url": {
+			"value": "https://aishstorageazureproject.dfs.core.windows.net/"
+		},
+		"ls_RESTAPIPR_properties_typeProperties_url": {
+			"value": "https://jsonplaceholder.typicode.com/"
+		},
+		"ls_az_sql_properties_typeProperties_server": {
+			"value": "aishwserver.database.windows.net"
+		},
+		"ls_az_sql_properties_typeProperties_database": {
+			"value": "dbaish"
+		},
+		"ls_az_sql_properties_typeProperties_userName": {
+			"value": "aiswerya"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
