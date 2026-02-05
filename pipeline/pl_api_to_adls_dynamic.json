@@ -157,12 +157,10 @@
 		],
 		"parameters": {
 			"pEndpoint": {
-				"type": "string",
-				"defaultValue": "posts"
+				"type": "string"
 			},
 			"pFileName": {
-				"type": "string",
-				"defaultValue": "posts.json"
+				"type": "string"
 			}
 		},
 		"annotations": []
