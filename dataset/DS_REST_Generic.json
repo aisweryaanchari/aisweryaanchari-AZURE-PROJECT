@@ -1,0 +1,23 @@
+{
+	"name": "DS_REST_Generic",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_RESTAPIPR",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"p_endpoint": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": {
+				"value": "@dataset().p_endpoint",
+				"type": "Expression"
+			}
+		},
+		"schema": []
+	}
+}
