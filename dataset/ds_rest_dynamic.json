@@ -1,0 +1,20 @@
+{
+	"name": "ds_rest_dynamic",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_RESTAPIPR",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"endpoint": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "@dataset().endpoint"
+		},
+		"schema": []
+	}
+}

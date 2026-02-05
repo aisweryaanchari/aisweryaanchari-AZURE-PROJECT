@@ -1,0 +1,21 @@
+{
+	"name": "ds_azsql_dynamic",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_az_sql",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Posts"
+		}
+	}
+}

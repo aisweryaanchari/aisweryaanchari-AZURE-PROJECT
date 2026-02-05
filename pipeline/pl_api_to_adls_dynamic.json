@@ -1,0 +1,170 @@
+{
+	"name": "pl_api_to_adls_dynamic",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data API TO ADLS GEN2",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_rest_dynamic",
+						"type": "DatasetReference",
+						"parameters": {
+							"endpoint": "posts"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_adls_json_dynamic",
+						"type": "DatasetReference",
+						"parameters": {
+							"folderPath": "jsonplaceholder/@{pipeline().parameters.pEndpoint}",
+							"fileName": "@{pipeline().parameters.pFileName}"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy data to SQL DB",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Copy data API TO ADLS GEN2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['userId']"
+								},
+								"sink": {
+									"name": "userId",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['id']"
+								},
+								"sink": {
+									"name": "id",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['title']"
+								},
+								"sink": {
+									"name": "title",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['body']"
+								},
+								"sink": {
+									"name": "body",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_adls_json_dynamic",
+						"type": "DatasetReference",
+						"parameters": {
+							"folderPath": "jsonplaceholder/posts/jsonplaceholder",
+							"fileName": "posts"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_azsql_dynamic",
+						"type": "DatasetReference",
+						"parameters": {
+							"tableName": "Posts"
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"pEndpoint": {
+				"type": "string",
+				"defaultValue": "posts"
+			},
+			"pFileName": {
+				"type": "string",
+				"defaultValue": "posts.json"
+			}
+		},
+		"annotations": []
+	}
+}
