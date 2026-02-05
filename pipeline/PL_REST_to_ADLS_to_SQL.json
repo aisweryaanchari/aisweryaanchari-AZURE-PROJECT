@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_REST_to_ADLS",
+				"name": "Copy data to ADLS",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
